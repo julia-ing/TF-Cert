@@ -8,16 +8,15 @@ from random import shuffle
 from shutil import copyfile
 from os import getcwd
 
-path_cats_and_dogs = "E:/TensorFlow Coursera/cats-and-dogs.zip"
-# shutil.rmtree('/tmp')
+path_cats_and_dogs = "C:/TensorFlow Coursera/cats-and-dogs.zip"
 
 local_zip = path_cats_and_dogs
 zip_ref = zipfile.ZipFile(local_zip, 'r')
 zip_ref.extractall('E:/TensorFlow Coursera')
 zip_ref.close()
 
-print(len(os.listdir('E:/TensorFlow Coursera/PetImages/Cat/')))
-print(len(os.listdir('E:/TensorFlow Coursera/PetImages/Dog/')))
+print(len(os.listdir('C:/TensorFlow Coursera/PetImages/Cat/')))
+print(len(os.listdir('C:/TensorFlow Coursera/PetImages/Dog/')))
 
 # Expected Output:
 # 1500
@@ -27,13 +26,13 @@ print(len(os.listdir('E:/TensorFlow Coursera/PetImages/Dog/')))
 # You will need a directory for cats-v-dogs, and subdirectories for training
 # and testing. These in turn will need subdirectories for 'cats' and 'dogs'
 try:
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/training")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/training/cats")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/training/dogs/")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/testing")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/testing/cats")
-    os.mkdir("E:/TensorFlow Coursera/cats-v-dogs/testing/dogs")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/training")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/training/cats")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/training/dogs/")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/testing")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/testing/cats")
+    os.mkdir("C:/TensorFlow Coursera/cats-v-dogs/testing/dogs")
 except OSError:
     print("Some Error happens!!")
     pass
@@ -64,24 +63,21 @@ def split_data(SOURCE, TRAINING, TESTING, SPLIT_SIZE):
             shutil.copyfile(src, dst)
 
 
-# YOUR CODE ENDS HERE
-
-
-CAT_SOURCE_DIR = "E:/TensorFlow Coursera/PetImages/Cat/"
-TRAINING_CATS_DIR = "E:/TensorFlow Coursera/cats-v-dogs/training/cats/"
-TESTING_CATS_DIR = "E:/TensorFlow Coursera/cats-v-dogs/testing/cats/"
-DOG_SOURCE_DIR = "E:/TensorFlow Coursera/PetImages/Dog/"
-TRAINING_DOGS_DIR = "E:/TensorFlow Coursera/cats-v-dogs/training/dogs/"
-TESTING_DOGS_DIR = "E:/TensorFlow Coursera/cats-v-dogs/testing/dogs/"
+CAT_SOURCE_DIR = "C:/TensorFlow Coursera/PetImages/Cat/"
+TRAINING_CATS_DIR = "C:/TensorFlow Coursera/cats-v-dogs/training/cats/"
+TESTING_CATS_DIR = "C:/TensorFlow Coursera/cats-v-dogs/testing/cats/"
+DOG_SOURCE_DIR = "C:/TensorFlow Coursera/PetImages/Dog/"
+TRAINING_DOGS_DIR = "C:/TensorFlow Coursera/cats-v-dogs/training/dogs/"
+TESTING_DOGS_DIR = "C:/TensorFlow Coursera/cats-v-dogs/testing/dogs/"
 
 split_size = .9
 split_data(CAT_SOURCE_DIR, TRAINING_CATS_DIR, TESTING_CATS_DIR, split_size)
 split_data(DOG_SOURCE_DIR, TRAINING_DOGS_DIR, TESTING_DOGS_DIR, split_size)
 
-print(len(os.listdir('E:/TensorFlow Coursera/cats-v-dogs/training/cats/')))
-print(len(os.listdir('E:/TensorFlow Coursera/cats-v-dogs/training/dogs/')))
-print(len(os.listdir('E:/TensorFlow Coursera/cats-v-dogs/testing/cats/')))
-print(len(os.listdir('E:/TensorFlow Coursera/cats-v-dogs/testing/dogs/')))
+print(len(os.listdir('C:/TensorFlow Coursera/cats-v-dogs/training/cats/')))
+print(len(os.listdir('C:/TensorFlow Coursera/cats-v-dogs/training/dogs/')))
+print(len(os.listdir('C:/TensorFlow Coursera/cats-v-dogs/testing/cats/')))
+print(len(os.listdir('C:/TensorFlow Coursera/cats-v-dogs/testing/dogs/')))
 
 # Expected output:
 # 1350
@@ -89,10 +85,7 @@ print(len(os.listdir('E:/TensorFlow Coursera/cats-v-dogs/testing/dogs/')))
 # 150
 # 150
 
-# DEFINE A KERAS MODEL TO CLASSIFY CATS V DOGS
-# USE AT LEAST 3 CONVOLUTION LAYERS
 model = tf.keras.models.Sequential([
-    # YOUR CODE HERE
     tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(150, 150, 3)),
     tf.keras.layers.MaxPooling2D(2, 2),
     tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
@@ -106,19 +99,15 @@ model = tf.keras.models.Sequential([
 
 model.compile(optimizer=RMSprop(lr=0.001), loss='binary_crossentropy', metrics=['acc'])
 
-TRAINING_DIR = 'E:/TensorFlow Coursera/cats-v-dogs/training'
+TRAINING_DIR = 'C:/TensorFlow Coursera/cats-v-dogs/training'
 train_datagen = ImageDataGenerator(rescale=1. / 255.)
 
-# NOTE: YOU MUST USE A BATCH SIZE OF 10 (batch_size=10) FOR THE
-# TRAIN GENERATOR.
 train_generator = train_datagen.flow_from_directory(TRAINING_DIR, batch_size=10, target_size=(150, 150),
                                                     class_mode='binary')
 
-VALIDATION_DIR = 'E:/TensorFlow Coursera/cats-v-dogs/testing'
+VALIDATION_DIR = 'C:/TensorFlow Coursera/cats-v-dogs/testing'
 validation_datagen = ImageDataGenerator(rescale=1. / 255.)
 
-# NOTE: YOU MUST USE A BACTH SIZE OF 10 (batch_size=10) FOR THE
-# VALIDATION GENERATOR.
 validation_generator = validation_datagen.flow_from_directory(VALIDATION_DIR, batch_size=10, target_size=(150, 150),
                                                               class_mode='binary')
 
@@ -131,7 +120,7 @@ history = model.fit_generator(train_generator,
                               verbose=1,
                               validation_data=validation_generator)
 
-import matplotlib.image  as mpimg
+import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 
 # -----------------------------------------------------------

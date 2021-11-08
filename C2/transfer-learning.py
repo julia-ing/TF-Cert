@@ -138,7 +138,7 @@ history = model.fit_generator(
     validation_steps=50,
     verbose=2)
 
-
+"""
 import matplotlib.pyplot as plt
 
 acc = history.history['acc']
@@ -155,3 +155,4 @@ plt.legend(loc=0)
 plt.figure()
 
 plt.show()
+"""

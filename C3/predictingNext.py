@@ -1,12 +1,8 @@
 import tensorflow as tf
-
-print(tf.__version__)
-
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.layers import Embedding, LSTM, Dense, Bidirectional
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.optimizers import Adam
 import numpy as np
 
 tokenizer = Tokenizer()
@@ -84,9 +80,11 @@ print(tokenizer.word_index)
 
 model = Sequential()
 model.add(Embedding(total_words, 64, input_length=max_sequence_len - 1))
-model.add(Bidirectional(LSTM(20)))
+model.add(Bidirectional(LSTM(20)))  # 양방향
 model.add(Dense(total_words, activation='softmax'))
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
 history = model.fit(xs, ys, epochs=500, verbose=1)
 
 """
@@ -99,12 +97,13 @@ def plot_graphs(history, string):
   plt.ylabel(string)
   plt.show()
 
-plot_graphs(history, 'accuracy')
+plot_graphs(history, 'acc')
 """
 
 seed_text = "Laurence went to dublin"
 next_words = 100
 
+# 다음에 나올 단어 예측하기
 for _ in range(next_words):
     token_list = tokenizer.texts_to_sequences([seed_text])[0]
     token_list = pad_sequences([token_list], maxlen=max_sequence_len - 1, padding='pre')
